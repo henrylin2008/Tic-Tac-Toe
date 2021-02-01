@@ -1,4 +1,5 @@
 import random
+
 # TODO
 # 1. We need to print a board.
 # 2. Take in player input.
@@ -15,6 +16,8 @@ import random
 game_list = [0, 1, 2]
 game_on = True
 test_board = ['#', 'x', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X']
+
+
 # test_board = [' ']*10
 
 
@@ -43,14 +46,14 @@ def player_input():
         marker = input('Player 1, choose X or O: ').upper()
 
     if marker == 'X':
-        return ('X','O')
+        return ('X', 'O')
     else:
-        return ('O','X')
+        return ('O', 'X')
 
 
 def place_marker(board, marker, position):
-
     board[position] = marker
+
 
 # place_marker(test_board, '$', 2)
 # display_board(test_board)
@@ -70,17 +73,55 @@ def win_check(board, mark):
             (board[1] == mark and board[5] == mark and board[9] == mark) or
             (board[3] == mark and board[5] == mark and board[7] == mark))
 
+
 # display_board(test_board)
 # win_check(test_board, 'X')
 
 
 def choose_first():
-
     flip = random.randint(0, 1)
 
     if flip == 0:
-        print('Player 1')
+        return 'Player 1'
     else:
-        print('Player 2')
+        return 'Player 2'
+
 
 # choose_first()
+
+
+def space_check(board, position):
+    # determine if a space on the board is freely available
+    return board[position] == ' '
+
+
+def full_board_check(board):
+    # Check if the board is full, True if Full, False otherwise
+    for i in range(1, 10):
+        if space_check(board, i):  # if there's available space, return False
+            return False
+    # Board is Full if return True
+    return True
+
+
+def player_choice(board):
+    """
+    Asks for player's next position; Check if it's a free position, if it is, return the position for later use
+    """
+    position = 0
+
+    while position not in [1, 2, 3, 4, 5, 6, 7, 8, 9] or not space_check(board, position):
+        position = int(input("Choose a position: (1-9) "))
+
+    return position
+
+
+def replay():
+    """
+
+    """
+    choice = input("Play again? Enter Yes or No ").lower()
+
+    return choice == 'yes'
+
+# replay()
