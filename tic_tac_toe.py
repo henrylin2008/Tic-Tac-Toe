@@ -1,4 +1,4 @@
-import os
+import random
 # TODO
 # 1. We need to print a board.
 # 2. Take in player input.
@@ -14,8 +14,8 @@ import os
 
 game_list = [0, 1, 2]
 game_on = True
-# test_board = ['#', 'x', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X']
-test_board = [' ']*10
+test_board = ['#', 'x', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X']
+# test_board = [' ']*10
 
 
 def clear_board():
@@ -32,21 +32,55 @@ def display_board(board):
 
 
 def player_input():
-    """Players pick his/her mark"""
+    """Players pick his/her mark
+    Output = (Player 1 marker, Player 2 marker)
+    """
+
     marker = ''
 
     # keep asking player 1 to choose X or O
+    while not (marker == 'X' or marker == 'O'):
+        marker = input('Player 1, choose X or O: ').upper()
 
-    while marker != 'X' and marker != 'O':
-        marker = input('Player 1, choose X or O: ')
-
-    player1 = marker
-
-    if player1 == 'X':
-        player2 = 'O'
+    if marker == 'X':
+        return ('X','O')
     else:
-        player2 = 'X'
-
-    return player1, player2
+        return ('O','X')
 
 
+def place_marker(board, marker, position):
+
+    board[position] = marker
+
+# place_marker(test_board, '$', 2)
+# display_board(test_board)
+
+
+def win_check(board, mark):
+    # Win Tic-Tac-Toe?
+    # All rows: share the same marker
+    # All columns: check if marker matches
+    # 2 diagonals, check to see match
+    return ((board[1] == mark and board[2] == mark and board[3] == mark) or
+            (board[4] == mark and board[5] == mark and board[6] == mark) or
+            (board[7] == mark and board[8] == mark and board[9] == mark) or
+            (board[1] == mark and board[4] == mark and board[7] == mark) or
+            (board[2] == mark and board[5] == mark and board[8] == mark) or
+            (board[3] == mark and board[6] == mark and board[9] == mark) or
+            (board[1] == mark and board[5] == mark and board[9] == mark) or
+            (board[3] == mark and board[5] == mark and board[7] == mark))
+
+# display_board(test_board)
+# win_check(test_board, 'X')
+
+
+def choose_first():
+
+    flip = random.randint(0, 1)
+
+    if flip == 0:
+        print('Player 1')
+    else:
+        print('Player 2')
+
+# choose_first()
